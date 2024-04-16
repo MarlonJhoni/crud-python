@@ -5,7 +5,7 @@ Curso:  Raciocínio Computacional - Turma 03
 
 '''
 
-def menuPrincipal():
+def menu_principal():
     print("----- MENU PRINCIPAL -----\n\n"
     "(0) Gerenciar estudantes.\n"
     "(1) Gerenciar professores.\n"
@@ -16,7 +16,7 @@ def menuPrincipal():
 
     return int(input("Informe a opção desejada: "))
        
-def menuOperacao():
+def menu_operacao():
     print("(0) Cadastrar.\n"
     "(1) Listar.\n"
     "(2) Atualizar.\n"
@@ -25,11 +25,11 @@ def menuOperacao():
 
     return int(input("Informe a opção desejada: "))
 
-def cadastrarEstudante(estudantes):
+def cadastrar_estudante(estudantes):
     print("===== INCLUSÃO =====")
     codigo = int(input("Informe o código do estudante: "))
     nome = input("Informe o nome do estudante: ")
-    cpf = int(input("Informe o CPF do estudante: "))
+    cpf = input("Informe o CPF do estudante: ")
 
     dados_estudantes = {
         "cod_estudante": codigo,
@@ -40,21 +40,21 @@ def cadastrarEstudante(estudantes):
     estudantes.append(dados_estudantes)
     print("\nEstudante incluido\n")
 
-def verificarCadastroEstudantes(estudantes):
-    if len(estudantes) == 0:
-        print("Não há estudantes cadastrados.\n")
-    else:
+def verificar_cadastro_estudantes(estudantes):
+    if len(estudantes) > 0:
         return True
-    
-def listarEstudades(estudantes):
-    if verificarCadastroEstudantes(estudantes) == True:
+    else:
+        print("Não há estudantes cadastrados.\n")
+
+def listar_estudades(estudantes):
+    if verificar_cadastro_estudantes(estudantes):
         print("===== LISTAGEM =====")
         for estudante in estudantes:
             print(estudante)
         print("====================\n")
 
-def editarEstudante(estudantes):
-    if verificarCadastroEstudantes(estudantes) == True:
+def editar_estudante(estudantes):
+    if verificar_cadastro_estudantes(estudantes):
         codigo_atualizar = int(input("Informe o código do estudante que deseja editar: "))
         estudante_editado = None
 
@@ -68,11 +68,11 @@ def editarEstudante(estudantes):
         else:
             estudante_editado["cod_estudante"] = int(input("Digite o novo código do estudante: "))
             estudante_editado["nome_estudante"] = input("Digite o novo nome do estudante: ")
-            estudante_editado["cpf_estudante"] = int(input("Digite o novo CPF do estudante: "))
+            estudante_editado["cpf_estudante"] = input("Digite o novo CPF do estudante: ")
             print("\nEstudante atualizado.\n")
     
-def excluirEstudante(estudantes):
-    if verificarCadastroEstudantes(estudantes) == True:
+def excluir_estudante(estudantes):
+    if verificar_cadastro_estudantes(estudantes):
         codigo_excluir = int(input("Informe o código do estudante que deseja excluir: "))
         estudante_removido = None
 
@@ -83,7 +83,7 @@ def excluirEstudante(estudantes):
 
         #Digitou um código inválido
         if estudante_removido is None:
-            print(f"Codigo {codigo_excluir} do estudante não encontrado, digite um código válido.")
+            print(f"Codigo {codigo_excluir} do estudante não encontrado, digite um código válido.\n")
         else:
             nome_estudante_removido = estudante_removido["nome_estudante"]
             estudantes.remove(estudante_removido)
@@ -91,45 +91,45 @@ def excluirEstudante(estudantes):
 
 
 
-opcaoMenuPrincipal = ["ESTUDANTES", "PROFESSORES", "DISCIPLINAS", "TURMAS", "MATRÍCULAS"]
-opcaoMenuOperacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
+opcao_menu_principal = ["ESTUDANTES", "PROFESSORES", "DISCIPLINAS", "TURMAS", "MATRÍCULAS"]
+opcao_menu_operacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
 estudantes = []
 
 while True:
     try:
         # Menu principal
-        opcao = menuPrincipal()
+        opcao = menu_principal()
             
         #Menu de opreações
         if opcao == 0:
-            print(f"Você escolheu a opção {opcaoMenuPrincipal[opcao]}.\n")
+            print(f"Você escolheu a opção {opcao_menu_principal[opcao]}.\n")
             while True:
                 try:
                     #Coletar a opção do menu de operações escolhida pelo usuário
-                    print(f"***** [{opcaoMenuPrincipal[opcao]}] MENU DE OPERAÇÕES *****\n")
-                    opcaoSecundaria = menuOperacao()
+                    print(f"***** [{opcao_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    opcao_secundaria = menu_operacao()
 
                     #Cadastrar Novo Estudante
-                    if opcaoSecundaria == 0:
-                        print(f"Você escolheu a opção secundária {opcaoMenuOperacao[opcaoSecundaria]}.\n")
-                        cadastrarEstudante(estudantes)
+                    if opcao_secundaria == 0:
+                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
+                        cadastrar_estudante(estudantes)
 
                     #Listar
-                    elif opcaoSecundaria == 1:
-                        print(f"Você escolheu a opção secundária {opcaoMenuOperacao[opcaoSecundaria]}.\n")
-                        listarEstudades(estudantes)
+                    elif opcao_secundaria == 1:
+                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
+                        listar_estudades(estudantes)
 
                     #Atualizar / Editar
-                    elif opcaoSecundaria == 2:
-                        print(f"Você escolheu a opção secundária {opcaoMenuOperacao[opcaoSecundaria]}.\n")
-                        editarEstudante(estudantes)
+                    elif opcao_secundaria == 2:
+                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
+                        editar_estudante(estudantes)
 
                     #Excluir
-                    elif opcaoSecundaria == 3:
-                        print(f"Você escolheu a opção secundária {opcaoMenuOperacao[opcaoSecundaria]}.\n")
-                        excluirEstudante(estudantes)
+                    elif opcao_secundaria == 3:
+                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
+                        excluir_estudante(estudantes)
                     
-                    elif opcaoSecundaria == 9:
+                    elif opcao_secundaria == 9:
                         print("Voltando ao menu principal.\n") 
                         break   
 
@@ -140,7 +140,7 @@ while True:
                     print("Válido somente número inteiro\n")
 
         elif opcao >= 1 and opcao <= 4:
-            print(f"Você escolheu a opção {opcaoMenuPrincipal[opcao]}.\n"
+            print(f"Você escolheu a opção {opcao_menu_principal[opcao]}.\n"
                     "EM DESENVOLVIMENTO\n")
 
         elif opcao == 9:
