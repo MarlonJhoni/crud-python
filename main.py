@@ -1,7 +1,8 @@
 '''
 
-Nome:   Marlon Jhoni Lima Antonelo
-Curso:  Raciocínio Computacional - Turma 03
+Nome:     Marlon Jhoni Lima Antonelo
+Curso:    Análise e Desenvolvimento de Sistemas  
+Matéria:  Raciocínio Computacional - Turma 03
 
 '''
 
