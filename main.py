@@ -45,10 +45,12 @@ def cadastrar_estudante(estudantes):
     salvar_dados(estudantes,nome_arquivo)
 
 def verificar_cadastro_estudantes(estudantes):
+    estudantes = ler_dados(nome_arquivo)
     if len(estudantes) > 0:
         return True
     else:
         print("Não há estudantes cadastrados.\n")
+        return False
 
 def listar_estudades(estudantes):
     estudantes = ler_dados(nome_arquivo)
