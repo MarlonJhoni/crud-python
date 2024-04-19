@@ -5,6 +5,7 @@ Curso:    Análise e Desenvolvimento de Sistemas
 Matéria:  Raciocínio Computacional - Turma 03
 
 '''
+import json
 
 def menu_principal():
     print("----- MENU PRINCIPAL -----\n\n"
@@ -38,8 +39,10 @@ def cadastrar_estudante(estudantes):
         "cpf_estudante": cpf
     }
 
+    estudantes = ler_dados(nome_arquivo)
     estudantes.append(dados_estudantes)
     print("\nEstudante incluido\n")
+    salvar_dados(estudantes,nome_arquivo)
 
 def verificar_cadastro_estudantes(estudantes):
     if len(estudantes) > 0:
@@ -48,6 +51,7 @@ def verificar_cadastro_estudantes(estudantes):
         print("Não há estudantes cadastrados.\n")
 
 def listar_estudades(estudantes):
+    estudantes = ler_dados(nome_arquivo)
     if verificar_cadastro_estudantes(estudantes):
         print("===== LISTAGEM =====")
         for estudante in estudantes:
@@ -55,6 +59,7 @@ def listar_estudades(estudantes):
         print("====================\n")
 
 def editar_estudante(estudantes):
+    estudantes = ler_dados(nome_arquivo)    
     if verificar_cadastro_estudantes(estudantes):
         codigo_atualizar = int(input("Informe o código do estudante que deseja editar: "))
         estudante_editado = None
@@ -71,8 +76,11 @@ def editar_estudante(estudantes):
             estudante_editado["nome_estudante"] = input("Digite o novo nome do estudante: ")
             estudante_editado["cpf_estudante"] = input("Digite o novo CPF do estudante: ")
             print("\nEstudante atualizado.\n")
-    
+            salvar_dados(estudantes,nome_arquivo)
+
+
 def excluir_estudante(estudantes):
+    estudantes = ler_dados(nome_arquivo)
     if verificar_cadastro_estudantes(estudantes):
         codigo_excluir = int(input("Informe o código do estudante que deseja excluir: "))
         estudante_removido = None
@@ -89,12 +97,27 @@ def excluir_estudante(estudantes):
             nome_estudante_removido = estudante_removido["nome_estudante"]
             estudantes.remove(estudante_removido)
             print(f"Estudante *{nome_estudante_removido}* excluido da lista.\n")
+            salvar_dados(estudantes,nome_arquivo)
 
 
+def salvar_dados(lista, nome_arquivo):
+    with open(nome_arquivo, 'w', encoding='utf-8') as arquivo:
+        json.dump(lista, arquivo, ensure_ascii=False)
+
+
+def ler_dados(nome_arquivo):
+    try:
+        with open(nome_arquivo, 'r', encoding='utf-8' ) as arquivo:
+            lista = json.load(arquivo)
+        
+        return lista
+    except:
+        return []
 
 opcao_menu_principal = ["ESTUDANTES", "PROFESSORES", "DISCIPLINAS", "TURMAS", "MATRÍCULAS"]
 opcao_menu_operacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
 estudantes = []
+nome_arquivo = "dados.json"
 
 while True:
     try:
