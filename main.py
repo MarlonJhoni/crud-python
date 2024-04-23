@@ -66,16 +66,16 @@ def editar_cadastro(nome_arquivo):
         cadastro_editado = None
 
         for i in lista_dados:
-            if i["cod_estudante"] == codigo_atualizar:
+            if i["Código"] == codigo_atualizar:
                 cadastro_editado = i
                 break
 
         if cadastro_editado is None:
             print(f"Codigo {codigo_atualizar} não encontrado, digite um código válido.\n")
         else:
-            cadastro_editado["cod_estudante"] = int(input("Digite o novo código: "))
-            cadastro_editado["nome_estudante"] = input("Digite o novo nome: ")
-            cadastro_editado["cpf_estudante"] = input("Digite o novo CPF: ")
+            cadastro_editado["Código"] = int(input("Digite o novo código: "))
+            cadastro_editado["Nome"] = input("Digite o novo nome: ")
+            cadastro_editado["CPF"] = input("Digite o novo CPF: ")
             print("\nCadastro atualizado.\n")
             salvar_dados(lista_dados,nome_arquivo)
 
@@ -87,7 +87,7 @@ def excluir_cadastro(nome_arquivo):
         cadastro_removido = None
 
         for i in lista_dados:
-            if i["cod_estudante"] == codigo_excluir:
+            if i["Código"] == codigo_excluir:
                 cadastro_removido = i
                 break
 
