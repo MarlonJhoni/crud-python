@@ -27,79 +27,77 @@ def menu_operacao():
 
     return int(input("Informe a opção desejada: "))
 
-def cadastrar_estudante(estudantes):
+def cadastrar_estudante(nome_arquivo):
     print("===== INCLUSÃO =====")
-    codigo = int(input("Informe o código do estudante: "))
-    nome = input("Informe o nome do estudante: ")
-    cpf = input("Informe o CPF do estudante: ")
+    codigo = int(input("Informe o código: "))
+    nome = input("Informe o nome: ")
+    cpf = input("Informe o CPF: ")
 
-    dados_estudantes = {
-        "cod_estudante": codigo,
-        "nome_estudante": nome,
-        "cpf_estudante": cpf
+    dados_cadastro = {
+        "Código": codigo,
+        "Nome": nome,
+        "CPF": cpf
     }
 
-    estudantes = ler_dados(nome_arquivo)
-    estudantes.append(dados_estudantes)
+    lista = ler_dados(nome_arquivo)
+    lista.append(dados_cadastro)
     print("\nEstudante incluido\n")
-    salvar_dados(estudantes,nome_arquivo)
+    salvar_dados(lista,nome_arquivo)
 
-def verificar_cadastro_estudantes(estudantes):
-    estudantes = ler_dados(nome_arquivo)
-    if len(estudantes) > 0:
+def verificar_cadastro(lista_dados):
+    if len(lista_dados) > 0:
         return True
     else:
-        print("Não há estudantes cadastrados.\n")
+        print("Não há dados cadastrados.\n")
         return False
 
-def listar_estudades(estudantes):
-    estudantes = ler_dados(nome_arquivo)
-    if verificar_cadastro_estudantes(estudantes):
+def listar_cadastro(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)
+    if verificar_cadastro(lista_dados):
         print("===== LISTAGEM =====")
-        for estudante in estudantes:
-            print(estudante)
+        for i in lista_dados:
+            print(i)
         print("====================\n")
 
-def editar_estudante(estudantes):
-    estudantes = ler_dados(nome_arquivo)    
-    if verificar_cadastro_estudantes(estudantes):
-        codigo_atualizar = int(input("Informe o código do estudante que deseja editar: "))
-        estudante_editado = None
+def editar_cadastro(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)    
+    if verificar_cadastro(lista_dados):
+        codigo_atualizar = int(input("Informe o código que deseja editar: "))
+        cadastro_editado = None
 
-        for dicionario_estudantes in estudantes:
-            if dicionario_estudantes["cod_estudante"] == codigo_atualizar:
-                estudante_editado = dicionario_estudantes
+        for i in lista_dados:
+            if i["cod_estudante"] == codigo_atualizar:
+                cadastro_editado = i
                 break
 
-        if estudante_editado is None:
-            print(f"Codigo {codigo_atualizar} do estudante não encontrado, digite um código válido.\n")
+        if cadastro_editado is None:
+            print(f"Codigo {codigo_atualizar} não encontrado, digite um código válido.\n")
         else:
-            estudante_editado["cod_estudante"] = int(input("Digite o novo código do estudante: "))
-            estudante_editado["nome_estudante"] = input("Digite o novo nome do estudante: ")
-            estudante_editado["cpf_estudante"] = input("Digite o novo CPF do estudante: ")
-            print("\nEstudante atualizado.\n")
-            salvar_dados(estudantes,nome_arquivo)
+            cadastro_editado["cod_estudante"] = int(input("Digite o novo código: "))
+            cadastro_editado["nome_estudante"] = input("Digite o novo nome: ")
+            cadastro_editado["cpf_estudante"] = input("Digite o novo CPF: ")
+            print("\nCadastro atualizado.\n")
+            salvar_dados(lista_dados,nome_arquivo)
 
 
-def excluir_estudante(estudantes):
-    estudantes = ler_dados(nome_arquivo)
-    if verificar_cadastro_estudantes(estudantes):
-        codigo_excluir = int(input("Informe o código do estudante que deseja excluir: "))
-        estudante_removido = None
+def excluir_cadastro(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)
+    if verificar_cadastro(lista_dados):
+        codigo_excluir = int(input("Informe o código que deseja excluir: "))
+        cadastro_removido = None
 
-        for dicionario_estudantes in estudantes:
-            if dicionario_estudantes["cod_estudante"] == codigo_excluir:
-                estudante_removido = dicionario_estudantes
+        for i in lista_dados:
+            if i["cod_estudante"] == codigo_excluir:
+                cadastro_removido = i
                 break
 
         #Digitou um código inválido
-        if estudante_removido is None:
-            print(f"Codigo {codigo_excluir} do estudante não encontrado, digite um código válido.\n")
+        if cadastro_removido is None:
+            print(f"Codigo {codigo_excluir} do cadstro não encontrado, digite um código válido.\n")
         else:
-            nome_estudante_removido = estudante_removido["nome_estudante"]
-            estudantes.remove(estudante_removido)
-            print(f"Estudante *{nome_estudante_removido}* excluido da lista.\n")
-            salvar_dados(estudantes,nome_arquivo)
+            lista_dados.remove(cadastro_removido)
+            print(f"Cadastro excluido da lista.\n")
+            salvar_dados(lista_dados,nome_arquivo)
 
 
 def salvar_dados(lista, nome_arquivo):
@@ -115,11 +113,43 @@ def ler_dados(nome_arquivo):
         return lista
     except:
         return []
+    
+def processar_menu_operacoes(opcao_secundaria,nome_arquivo,titulo):
+    #Cadastrar Novo
+    if opcao_secundaria == 0:
+        print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
+        cadastrar_estudante(nome_arquivo)
 
-opcao_menu_principal = ["ESTUDANTES", "PROFESSORES", "DISCIPLINAS", "TURMAS", "MATRÍCULAS"]
-opcao_menu_operacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
-estudantes = []
-nome_arquivo = "dados.json"
+    #Listar
+    elif opcao_secundaria == 1:
+        print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
+        listar_cadastro(nome_arquivo)
+
+    #Atualizar / Editar
+    elif opcao_secundaria == 2:
+        print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
+        editar_cadastro(nome_arquivo)
+
+    #Excluir
+    elif opcao_secundaria == 3:
+        print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
+        excluir_cadastro(nome_arquivo)
+    
+    elif opcao_secundaria == 9:
+        print("Voltando ao menu principal.\n") 
+        return False
+
+    else:
+        print("Você digitou uma opção secundária *inválida*.\n")
+
+    return True
+
+
+titulo_menu_principal = ["ESTUDANTES", "PROFESSORES", "DISCIPLINAS", "TURMAS", "MATRÍCULAS"]
+titulo_menu_operacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
+
+arquivo_estudante = "dados/estudantes.json"
+arquivo_professor = "dados/professores.json"
 
 while True:
     try:
@@ -128,45 +158,31 @@ while True:
             
         #Menu de opreações
         if opcao == 0:
-            print(f"Você escolheu a opção {opcao_menu_principal[opcao]}.\n")
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
             while True:
                 try:
                     #Coletar a opção do menu de operações escolhida pelo usuário
-                    print(f"***** [{opcao_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
                     opcao_secundaria = menu_operacao()
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_estudante,titulo_menu_operacao):
+                        break
+                except ValueError:
+                    print("Válido somente número inteiro\n")
 
-                    #Cadastrar Novo Estudante
-                    if opcao_secundaria == 0:
-                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
-                        cadastrar_estudante(estudantes)
-
-                    #Listar
-                    elif opcao_secundaria == 1:
-                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
-                        listar_estudades(estudantes)
-
-                    #Atualizar / Editar
-                    elif opcao_secundaria == 2:
-                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
-                        editar_estudante(estudantes)
-
-                    #Excluir
-                    elif opcao_secundaria == 3:
-                        print(f"Você escolheu a opção secundária {opcao_menu_operacao[opcao_secundaria]}.\n")
-                        excluir_estudante(estudantes)
-                    
-                    elif opcao_secundaria == 9:
-                        print("Voltando ao menu principal.\n") 
-                        break   
-
-                    else:
-                        print("Você digitou uma opção secundária *inválida*.\n")
-
+        elif opcao == 1:
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
+            while True:
+                try:
+                    #Coletar a opção do menu de operações escolhida pelo usuário
+                    print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    opcao_secundaria = menu_operacao()
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_professor,titulo_menu_operacao):
+                        break
                 except ValueError:
                     print("Válido somente número inteiro\n")
 
         elif opcao >= 1 and opcao <= 4:
-            print(f"Você escolheu a opção {opcao_menu_principal[opcao]}.\n"
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n"
                     "EM DESENVOLVIMENTO\n")
 
         elif opcao == 9:
