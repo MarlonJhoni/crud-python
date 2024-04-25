@@ -1,6 +1,6 @@
 # Sistema para Gestão de Dados Acadêmicos
 
-Bem-vindo ao meu projeto da matéria Raciocínio Lógico do curso de Análise e Desenvolvimento de Sistemas da PUC-PR.
+Bem-vindo ao meu projeto da matéria Raciocínio Computacional do curso de Análise e Desenvolvimento de Sistemas da PUC-PR.
 
 Esse projeto envolve a criação de um CRUD na linguagem em Python. Um gerenciamento de dados de estudantes, disciplinas, professores, turmas e matrículas.
 
