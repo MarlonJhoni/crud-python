@@ -27,22 +27,91 @@ def menu_operacao():
 
     return int(input("Informe a opção desejada: "))
 
-def cadastrar_estudante(nome_arquivo):
+def cadastrar_estudante_ou_professor(nome_arquivo):
     print("===== INCLUSÃO =====")
-    codigo = int(input("Informe o código: "))
+    codigo1 = int(input("Informe o código: "))
     nome = input("Informe o nome: ")
     cpf = input("Informe o CPF: ")
 
     dados_cadastro = {
-        "Código": codigo,
+        "Código": codigo1,
         "Nome": nome,
         "CPF": cpf
     }
 
     lista = ler_dados(nome_arquivo)
+
+    if vericar_codigo(lista, codigo1):
+       return
+
     lista.append(dados_cadastro)
     print("\nEstudante incluido\n")
     salvar_dados(lista,nome_arquivo)
+
+def cadastrar_disciplina(nome_arquivo):
+    print("===== INCLUSÃO =====")
+    codigo1 = int(input("Informe o código da disciplina: "))
+    nome = input("Informe o nome da disciplina: ")
+
+    dados_cadastro = {
+        "Código": codigo1,
+        "Nome": nome,
+    }
+
+    lista = ler_dados(nome_arquivo)
+
+    if vericar_codigo(lista, codigo1):
+       return
+
+    lista.append(dados_cadastro)
+    print("\nCadastro incluido\n")
+    salvar_dados(lista,nome_arquivo)
+
+def cadastrar_turma(nome_arquivo):
+    print("===== INCLUSÃO =====")
+    codigo1 = int(input("Informe o código da turma: "))
+    codigo2 = int(input("Informe o código do professor: "))
+    codigo3 = int(input("Informe o código do estudante: "))
+
+    lista = ler_dados(nome_arquivo)
+
+    if vericar_codigo(lista, codigo1):
+       return
+
+    dados_cadastro = {
+        "Código": codigo1,
+        "Código do Professor": codigo2,
+        "Código do Estudante": codigo3,
+    }
+
+    lista.append(dados_cadastro)
+    print("\nCadastro incluido\n")
+    salvar_dados(lista,nome_arquivo)
+
+def cadastrar_matricula(nome_arquivo):
+    print("===== INCLUSÃO =====")
+    codigo1 = int(input("Informe o código da turma: "))
+    codigo2 = int(input("Informe o código do estudante: "))
+
+    lista = ler_dados(nome_arquivo)
+    if vericar_codigo(lista, codigo1):
+       return
+
+    dados_cadastro = {
+        "Código": codigo1,
+        "Código do Estudante": codigo2,
+    }
+
+    lista.append(dados_cadastro)
+    print("\nCadastro incluido\n")
+    salvar_dados(lista,nome_arquivo)
+
+def vericar_codigo(lista,codigo):
+    for i in lista:
+        if i["Código"] == codigo:
+            print(f"\nCódigo já existente.\n")
+            return True
+    return False
 
 def verificar_cadastro(lista_dados):
     if len(lista_dados) > 0:
@@ -76,6 +145,64 @@ def editar_cadastro(nome_arquivo):
             cadastro_editado["Código"] = int(input("Digite o novo código: "))
             cadastro_editado["Nome"] = input("Digite o novo nome: ")
             cadastro_editado["CPF"] = input("Digite o novo CPF: ")
+            print("\nCadastro atualizado.\n")
+            salvar_dados(lista_dados,nome_arquivo)
+
+def editar_disciplina(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)    
+    if verificar_cadastro(lista_dados):
+        codigo_atualizar = int(input("Informe o código que deseja editar: "))
+        cadastro_editado = None
+
+        for i in lista_dados:
+            if i["Código"] == codigo_atualizar:
+                cadastro_editado = i
+                break
+
+        if cadastro_editado is None:
+            print(f"Codigo {codigo_atualizar} não encontrado, digite um código válido.\n")
+        else:
+            cadastro_editado["Código"] = int(input("Digite o novo código: "))
+            cadastro_editado["Nome"] = input("Digite o novo nome da disciplina: ")
+            print("\nCadastro atualizado.\n")
+            salvar_dados(lista_dados,nome_arquivo)
+
+def editar_turma(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)    
+    if verificar_cadastro(lista_dados):
+        codigo_atualizar = int(input("Informe o código que deseja editar: "))
+        cadastro_editado = None
+
+        for i in lista_dados:
+            if i["Código"] == codigo_atualizar:
+                cadastro_editado = i
+                break
+
+        if cadastro_editado is None:
+            print(f"Codigo {codigo_atualizar} não encontrado, digite um código válido.\n")
+        else:
+            cadastro_editado["Código"] = int(input("Digite o novo código: "))
+            cadastro_editado["Código do Professor"] = input("Digite o novo nome do professor: ")
+            cadastro_editado["Código do Estudante"] = input("Digite o novo nome do estudante: ")
+            print("\nCadastro atualizado.\n")
+            salvar_dados(lista_dados,nome_arquivo)
+
+def editar_matricula(nome_arquivo):
+    lista_dados = ler_dados(nome_arquivo)    
+    if verificar_cadastro(lista_dados):
+        codigo_atualizar = int(input("Informe o código que deseja editar: "))
+        cadastro_editado = None
+
+        for i in lista_dados:
+            if i["Código"] == codigo_atualizar:
+                cadastro_editado = i
+                break
+
+        if cadastro_editado is None:
+            print(f"Codigo {codigo_atualizar} não encontrado, digite um código válido.\n")
+        else:
+            cadastro_editado["Código"] = int(input("Digite o novo código: "))
+            cadastro_editado["Código do Estudante"] = input("Digite o novo nome do estudante: ")
             print("\nCadastro atualizado.\n")
             salvar_dados(lista_dados,nome_arquivo)
 
@@ -114,11 +241,19 @@ def ler_dados(nome_arquivo):
     except:
         return []
     
-def processar_menu_operacoes(opcao_secundaria,nome_arquivo,titulo):
+def processar_menu_operacoes(opcao_secundaria,nome_arquivo,titulo,opcao_primaria):
     #Cadastrar Novo
     if opcao_secundaria == 0:
         print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
-        cadastrar_estudante(nome_arquivo)
+        if opcao_primaria == 0 or opcao_primaria == 1:
+            cadastrar_estudante_ou_professor(nome_arquivo)
+        elif opcao_primaria == 2:
+            cadastrar_disciplina(nome_arquivo)
+        elif opcao_primaria == 3:
+            cadastrar_turma(nome_arquivo)
+        elif opcao_primaria == 4:
+            cadastrar_matricula(nome_arquivo)
+    
 
     #Listar
     elif opcao_secundaria == 1:
@@ -128,7 +263,14 @@ def processar_menu_operacoes(opcao_secundaria,nome_arquivo,titulo):
     #Atualizar / Editar
     elif opcao_secundaria == 2:
         print(f"Você escolheu a opção secundária {titulo[opcao_secundaria]}.\n")
-        editar_cadastro(nome_arquivo)
+        if opcao_primaria == 0 or opcao_primaria == 1:
+            editar_cadastro(nome_arquivo)
+        elif opcao_primaria == 2:
+            editar_disciplina(nome_arquivo)
+        elif opcao_primaria == 3:
+            editar_turma(nome_arquivo)
+        elif opcao_primaria == 4:
+            editar_matricula(nome_arquivo)
 
     #Excluir
     elif opcao_secundaria == 3:
@@ -150,13 +292,16 @@ titulo_menu_operacao = ["CADASTRAR", "LISTAR", "ATUALIZAR", "EXCLUIR"]
 
 arquivo_estudante = "dados/estudantes.json"
 arquivo_professor = "dados/professores.json"
+arquivo_disciplina = "dados/disciplinas.json"
+arquivo_turma = "dados/turmas.json"
+arquivo_matricula = "dados/matriculas.json"
+
 
 while True:
     try:
         # Menu principal
         opcao = menu_principal()
-            
-        #Menu de opreações
+
         if opcao == 0:
             print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
             while True:
@@ -164,7 +309,7 @@ while True:
                     #Coletar a opção do menu de operações escolhida pelo usuário
                     print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
                     opcao_secundaria = menu_operacao()
-                    if not processar_menu_operacoes(opcao_secundaria,arquivo_estudante,titulo_menu_operacao):
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_estudante,titulo_menu_operacao,opcao):
                         break
                 except ValueError:
                     print("Válido somente número inteiro\n")
@@ -176,14 +321,46 @@ while True:
                     #Coletar a opção do menu de operações escolhida pelo usuário
                     print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
                     opcao_secundaria = menu_operacao()
-                    if not processar_menu_operacoes(opcao_secundaria,arquivo_professor,titulo_menu_operacao):
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_professor,titulo_menu_operacao,opcao):
                         break
                 except ValueError:
                     print("Válido somente número inteiro\n")
 
-        elif opcao >= 1 and opcao <= 4:
-            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n"
-                    "EM DESENVOLVIMENTO\n")
+        elif opcao == 2:
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
+            while True:
+                try:
+                    #Coletar a opção do menu de operações escolhida pelo usuário
+                    print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    opcao_secundaria = menu_operacao()
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_disciplina,titulo_menu_operacao,opcao):
+                        break
+                except ValueError:
+                    print("Válido somente número inteiro\n")
+
+        elif opcao == 3:
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
+            while True:
+                try:
+                    #Coletar a opção do menu de operações escolhida pelo usuário
+                    print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    opcao_secundaria = menu_operacao()
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_turma,titulo_menu_operacao,opcao):
+                        break
+                except ValueError:
+                    print("Válido somente número inteiro\n")
+
+        elif opcao == 4:
+            print(f"Você escolheu a opção {titulo_menu_principal[opcao]}.\n")
+            while True:
+                try:
+                    #Coletar a opção do menu de operações escolhida pelo usuário
+                    print(f"***** [{titulo_menu_principal[opcao]}] MENU DE OPERAÇÕES *****\n")
+                    opcao_secundaria = menu_operacao()
+                    if not processar_menu_operacoes(opcao_secundaria,arquivo_matricula,titulo_menu_operacao,opcao):
+                        break
+                except ValueError:
+                    print("Válido somente número inteiro\n")
 
         elif opcao == 9:
             print("Você pediu para sair.")
@@ -198,4 +375,3 @@ while True:
 
 print("===== ATUALIZAÇÃO =====")
 print("Finalizando aplicação...")
-
