@@ -1,8 +1,6 @@
-# EM DESENVOLVIMENTO
-
 # Sistema para Gestão de Dados Acadêmicos
 
-Bem-vindo ao meu projeto do curso de Análise de Desenvolvimento de Sistemas da PUC-PR.
+Bem-vindo ao meu projeto da matéria Raciocínio Lógico do curso de Análise e Desenvolvimento de Sistemas da PUC-PR.
 
 Esse projeto envolve a criação de um CRUD na linguagem em Python. Um gerenciamento de dados de estudantes, disciplinas, professores, turmas e matrículas.
 
@@ -19,7 +17,9 @@ Esse projeto envolve a criação de um CRUD na linguagem em Python. Um gerenciam
 
 - **Funções:** Modularizar o sistema, inserindo as principais funcionalidades dentro de funções, visando uma codigo mais organizado e focando no reaproveitamento de código.
 
-- **Exceção e arquivos:** Implementar a gravação dos dados cadastrais usando arquivos JSON. Criando funções para a escrita e leitura de arquivos. 
+- **Arquivos:** Implementar a gravação dos dados cadastrais usando arquivos JSON. Criando funções para a escrita e leitura de arquivos. 
+
+- **Exceção:** Validações de dados e controle de possíveis exceções/erros de execução
 
 
 ## Autor
