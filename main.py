@@ -45,7 +45,7 @@ def cadastrar_estudante_ou_professor(nome_arquivo):
        return
 
     lista.append(dados_cadastro)
-    print("\nEstudante incluido\n")
+    print("\nCadastro incluido\n")
     salvar_dados(lista,nome_arquivo)
 
 def cadastrar_disciplina(nome_arquivo):
